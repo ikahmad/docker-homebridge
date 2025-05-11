@@ -38,7 +38,7 @@ RUN set -x \
   && apt-get clean \
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* \
   && rm -rf /etc/cron.daily/apt-compat /etc/cron.daily/dpkg /etc/cron.daily/passwd /etc/cron.daily/exim4-base
-  
+
 RUN case "$(uname -m)" in \
     x86_64) S6_ARCH='x86_64';; \
     armv7l) S6_ARCH='armhf';; \
@@ -74,10 +74,13 @@ RUN case "$(uname -m)" in \
   && chown -R root:root /opt/homebridge \
   && rm -rf /var/lib/homebridge
 
-COPY rootfs /
+COPY rootfs / 
 
 EXPOSE 8581/tcp
-VOLUME /homebridge
+
+# Removed the VOLUME line
+# VOLUME /homebridge
+
 WORKDIR /homebridge
 
 ENTRYPOINT [ "/init" ]
